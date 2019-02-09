@@ -41,3 +41,8 @@
   color:  black;
   text-align: left;
 }
+
+.list-group-item .form-check{
+ display: inline;
+ margin-right: 15px;
+}

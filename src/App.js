@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Container, InputGroup, ProgressBar, Row, Col, ListGroup, Label } from 'react-bootstrap';
+import { Form, Button, Container, InputGroup, ProgressBar, Row, Col, ListGroup, Label, ButtonToolbar } from 'react-bootstrap';
 import './App.css';
 
 
@@ -15,10 +15,10 @@ class App extends Component {
           <Container>
             <Row>
               <InputGroup >
-                <Form.Control type="email" placeholder="Type what you need to get done here" />
+                <Form.Control type="text" placeholder="Add your todo item" />
                 <Button variant="primary" type="submit">
                   Add
-                  </Button>
+                 </Button>
               </InputGroup>
             </Row>
             <Row>
@@ -27,11 +27,19 @@ class App extends Component {
               </Col>
             </Row>            
             <ListGroup className="list-items">
-              <ListGroup.Item>Cras justo odio</ListGroup.Item>
-              <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-              <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-              <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-              <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+              <ListGroup.Item action>
+                <Container>
+                  <Row>
+                    <Col xs="10"><Form.Check type="checkbox"/>Cras justo odio</Col>
+                    <Col>
+                    <ButtonToolbar>
+                      <Button variant="primary" type="button">Edit</Button>
+                      <Button variant="danger" type="button">Delete</Button>
+                    </ButtonToolbar>
+                    </Col>
+                  </Row>
+                </Container>                                              
+              </ListGroup.Item>
             </ListGroup>
           </Container>
         </header>
