@@ -46,3 +46,7 @@
  display: inline;
  margin-right: 15px;
 }
+
+.list-group-item .btn-toolbar{
+  justify-content: flex-end;
+}

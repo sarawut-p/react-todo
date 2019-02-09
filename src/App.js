@@ -30,16 +30,29 @@ class App extends Component {
               <ListGroup.Item action>
                 <Container>
                   <Row>
-                    <Col xs="10"><Form.Check type="checkbox"/>Cras justo odio</Col>
+                    <Col xs="9"><Form.Check type="checkbox"/>Cras justo odio</Col>
                     <Col>
-                    <ButtonToolbar>
-                      <Button variant="primary" type="button">Edit</Button>
-                      <Button variant="danger" type="button">Delete</Button>
-                    </ButtonToolbar>
+                      <ButtonToolbar>
+                        <Button variant="primary" type="button">Edit</Button>
+                        <Button variant="danger" type="button">Delete</Button>
+                      </ButtonToolbar>
                     </Col>
                   </Row>
                 </Container>                                              
               </ListGroup.Item>
+              <ListGroup.Item action>
+                <Container>
+                  <Row>
+                    <Col xs="9"><Form.Control type="text" placeholder="Add your todo item" /></Col>
+                    <Col>
+                      <ButtonToolbar>
+                        <Button variant="primary" type="button">Update</Button>
+                        <Button variant="outline-secondary" type="button">Cancel</Button>
+                      </ButtonToolbar>
+                    </Col>
+                  </Row>
+                </Container>                                              
+              </ListGroup.Item>              
             </ListGroup>
           </Container>
         </header>
