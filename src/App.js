@@ -9,16 +9,38 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentItem:''
+      currentItem:'',
+      editingUuid:''
     }
     this.todoItemInput = React.createRef();
   }
 
-  getEditListItem = () => {
+  getListItemReadMode = (item) => {
+    const {uuid, text} = item;
+    return <ListGroup.Item key={uuid}>
+      <Container>
+        <Row>
+          <Col xs="9"><Form.Check type="checkbox" />{text}</Col>
+          <Col>
+            <ButtonToolbar>
+              <Button variant="primary" type="button" onClick={() => this.setEditingUuid(uuid)}>Edit</Button>
+              <Button variant="danger" type="button">Delete</Button>
+            </ButtonToolbar>
+          </Col>
+        </Row>
+      </Container>
+    </ListGroup.Item>
+  }
+
+  setEditingUuid = (editingUuid) => {
+    this.setState({editingUuid});
+  }
+
+  getListItemEditMode = (item) => {
     return <ListGroup.Item>
       <Container>
         <Row>
-          <Col xs="9"><Form.Control type="text" placeholder="Add your todo item" /></Col>
+          <Col xs="9"><Form.Control type="text" value={item.text} placeholder="Add your todo item" /></Col>
           <Col>
             <ButtonToolbar>
               <Button variant="primary" type="button">Update</Button>
@@ -32,19 +54,8 @@ class App extends Component {
 
   getListItem = () => {
     const {todos} = this.props;
-    return todos && todos.map(item =><ListGroup.Item key={item.uuid}>
-      <Container>
-        <Row>
-          <Col xs="9"><Form.Check type="checkbox" />{item.text}</Col>
-          <Col>
-            <ButtonToolbar>
-              <Button variant="primary" type="button">Edit</Button>
-              <Button variant="danger" type="button">Delete</Button>
-            </ButtonToolbar>
-          </Col>
-        </Row>
-      </Container>
-    </ListGroup.Item>);
+    const {editingUuid} = this.state;
+    return todos && todos.map(item => item.uuid === editingUuid ? this.getListItemEditMode(item) : this.getListItemReadMode(item));
   }
 
   handleItemChange = (event) => {
@@ -86,7 +97,6 @@ class App extends Component {
             </Row>
             <ListGroup className="list-items">
               {this.getListItem()}
-              {this.getEditListItem()}
             </ListGroup>
           </Container>
         </header>
