@@ -11,13 +11,26 @@ class App extends Component {
     this.state = {
       currentItem:''
     }
-    this.handleItemChange = this.handleItemChange.bind(this);
-    this.handleAddButton = this.handleAddButton.bind(this);
-    this.getListItem = this.getListItem.bind(this);
     this.todoItemInput = React.createRef();
   }
 
-  getListItem() {
+  getEditListItem = () => {
+    return <ListGroup.Item>
+      <Container>
+        <Row>
+          <Col xs="9"><Form.Control type="text" placeholder="Add your todo item" /></Col>
+          <Col>
+            <ButtonToolbar>
+              <Button variant="primary" type="button">Update</Button>
+              <Button variant="outline-secondary" type="button">Cancel</Button>
+            </ButtonToolbar>
+          </Col>
+        </Row>
+      </Container>
+    </ListGroup.Item>
+  } 
+
+  getListItem = () => {
     const {todos} = this.props;
     return todos && todos.map(item =><ListGroup.Item key={item.uuid}>
       <Container>
@@ -34,11 +47,11 @@ class App extends Component {
     </ListGroup.Item>);
   }
 
-  handleItemChange(event){
+  handleItemChange = (event) => {
     this.setState({currentItem: event.target.value});
   }
 
-  handleAddButton(){
+  handleAddButton = () => {
     const {addTodoItem} = this.props;
     addTodoItem(this.state.currentItem);
     this.setState({currentItem: ''});
@@ -73,19 +86,7 @@ class App extends Component {
             </Row>
             <ListGroup className="list-items">
               {this.getListItem()}
-              <ListGroup.Item>
-                <Container>
-                  <Row>
-                    <Col xs="9"><Form.Control type="text" placeholder="Add your todo item" /></Col>
-                    <Col>
-                      <ButtonToolbar>
-                        <Button variant="primary" type="button">Update</Button>
-                        <Button variant="outline-secondary" type="button">Cancel</Button>
-                      </ButtonToolbar>
-                    </Col>
-                  </Row>
-                </Container>
-              </ListGroup.Item>
+              {this.getEditListItem()}
             </ListGroup>
           </Container>
         </header>
