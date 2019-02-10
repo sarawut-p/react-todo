@@ -15,6 +15,23 @@ class App extends Component {
     this.handleAddButton = this.handleAddButton.bind(this);
   }
 
+  getListItem() {
+    const {todos} = this.props;
+    return todos.map(item =><ListGroup.Item>
+      <Container>
+        <Row>
+          <Col xs="9"><Form.Check type="checkbox" />{item}</Col>
+          <Col>
+            <ButtonToolbar>
+              <Button variant="primary" type="button">Edit</Button>
+              <Button variant="danger" type="button">Delete</Button>
+            </ButtonToolbar>
+          </Col>
+        </Row>
+      </Container>
+    </ListGroup.Item>);
+  }
+
   handleItemChange(event){
     this.setState({currentItem: event.target.value});
   }
@@ -47,19 +64,7 @@ class App extends Component {
               </Col>
             </Row>
             <ListGroup className="list-items">
-              <ListGroup.Item>
-                <Container>
-                  <Row>
-                    <Col xs="9"><Form.Check type="checkbox" />Cras justo odio</Col>
-                    <Col>
-                      <ButtonToolbar>
-                        <Button variant="primary" type="button">Edit</Button>
-                        <Button variant="danger" type="button">Delete</Button>
-                      </ButtonToolbar>
-                    </Col>
-                  </Row>
-                </Container>
-              </ListGroup.Item>
+              {this.getListItem()}
               <ListGroup.Item>
                 <Container>
                   <Row>
