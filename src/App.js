@@ -64,10 +64,16 @@ class App extends Component {
 
   getListItemEditMode = (item) => {
     const {uuid, text} = item;
+    const onEditItemTextKeypress = (e) => {
+      if (e.key === 'Enter') {
+        this.updateTodoItem();
+      }
+    }
+
     return <ListGroup.Item key={uuid}>
       <Container>
         <Row>
-          <Col xs="9"><Form.Control type="text" onChange={(e)=>this.setState({editingText: e.target.value})} defaultValue={text} placeholder="Add your todo item" /></Col>
+          <Col xs="9"><Form.Control type="text" onKeyPress={onEditItemTextKeypress} onChange={(e)=>this.setState({editingText: e.target.value})} defaultValue={text} placeholder="Add your todo item" /></Col>
           <Col>
             <ButtonToolbar>
               <Button variant="primary" type="button" onClick={this.updateTodoItem}>Update</Button>
@@ -115,14 +121,18 @@ class App extends Component {
 
   render() {
 
-
+    const onAddItemTextKeypress = (e) => {
+      if (e.key === 'Enter') {
+        this.handleAddButton();
+      }
+    }
     return (
       <div className="App">
         <header className="App-header">
           <Container>
             <Row>
               <InputGroup >
-                <Form.Control ref={this.todoItemInput} type="text" value={this.state.currentItem} onChange={this.handleItemChange} placeholder="Add your todo item" />
+                <Form.Control ref={this.todoItemInput}  onKeyPress={onAddItemTextKeypress} type="text" value={this.state.currentItem} onChange={this.handleItemChange} placeholder="Add your todo item" />
                 <Button variant="primary" onClick={this.handleAddButton} type="submit">
                   Add
                  </Button>
