@@ -3,6 +3,7 @@ import { Form, Button, Container, InputGroup, ProgressBar, Row, Col, ListGroup, 
 import './App.css';
 import {connect} from "react-redux";
 import {addTodo, updateTodo, deleteTodo, toggleDone} from './index';
+import classNames from 'classnames';
 
 class App extends Component {
 
@@ -19,12 +20,16 @@ class App extends Component {
   getListItemReadMode = (item) => {
     const {toggleDone} = this.props;
     const {uuid, text, isDone} = item;
+    const textClass = classNames({
+      'done': isDone,
+      'clickable': true
+    });
     return <ListGroup.Item key={uuid}>
       <Container>
         <Row>
-          <Col xs="9" className='clickable' onClick={()=>toggleDone({uuid})}>
-            <Form.Check type="checkbox" defaultChecked={isDone}/>
-            <span className={isDone && 'done'}>{text}</span>
+          <Col xs="9" className='clickable'>
+            <Form.Check type="checkbox" defaultChecked={isDone} onClick={() => toggleDone({uuid})}/>
+            <span classNames={textClass} onClick={()=>this.setEditingUuid(uuid)}>{text}</span>
           </Col>
           <Col>
             <ButtonToolbar>
