@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Container, InputGroup, ProgressBar, Row, Col, ListGroup, ButtonToolbar } from 'react-bootstrap';
 import './App.css';
 import {connect} from "react-redux";
-import {addTodo, updateTodo} from './index';
+import {addTodo, updateTodo, deleteTodo} from './index';
 
 class App extends Component {
 
@@ -25,13 +25,18 @@ class App extends Component {
           <Col>
             <ButtonToolbar>
               <Button variant="primary" type="button" onClick={() => this.setEditingUuid(uuid)}>Edit</Button>
-              <Button variant="danger" type="button">Delete</Button>
+              <Button variant="danger" type="button" onClick={()=>this.deleteTodoItem(uuid)}>Delete</Button>
             </ButtonToolbar>
           </Col>
         </Row>
       </Container>
     </ListGroup.Item>
   }
+
+  deleteTodoItem = (uuid) => {
+    const {deleteTodoItem} = this.props;
+    deleteTodoItem({uuid});
+  }  
 
   setEditingUuid = (editingUuid) => {
     this.setState({editingUuid});
@@ -130,6 +135,9 @@ const mapDispatchToProps = dispatch => {
     },
     updateTodoItem: (todoItem) => {
       dispatch(updateTodo(todoItem));
+    },
+    deleteTodoItem: (todoItem) => {
+      dispatch(deleteTodo(todoItem));
     }
   }  
 }
