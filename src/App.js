@@ -91,9 +91,13 @@ class App extends Component {
     this.todoItemInput.current.focus(); // one important change here is that we need to access the element via current.
   }  
 
-  render() {
+  getProgressBar = () => {
     const now = 60;
-    const progressInstance = <ProgressBar now={now} label={`Progress - ${now}%`} />;
+    return <ProgressBar now={now} label={`Progress - ${now}%`} />;
+  }
+
+  render() {
+
 
     return (
       <div className="App">
@@ -108,8 +112,8 @@ class App extends Component {
               </InputGroup>
             </Row>
             <Row>
-              <Col sm={12}>
-                {progressInstance}
+              <Col xs="12">
+                {this.getProgressBar()}
               </Col>
             </Row>
             <ListGroup className="list-items">
@@ -124,7 +128,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos,
+    todos: state.todos,    
   }
 }
 
