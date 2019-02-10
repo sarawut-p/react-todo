@@ -45,6 +45,7 @@
 .list-group-item .form-check{
  display: inline;
  margin-right: 15px;
+ vertical-align: text-bottom;
 }
 
 .list-group-item .btn-toolbar{
@@ -61,4 +62,8 @@
 
 input[type='checkbox'] {
   cursor:pointer;
+}
+
+.addItemBar {
+  margin-bottom: 50px;
 }

@@ -24,16 +24,19 @@ class App extends Component {
       'done': isDone,
       'clickable': true
     });
+
+    const startEditing = ()=>this.setEditingUuid(item);
+
     return <ListGroup.Item key={uuid}>
       <Container>
         <Row>
           <Col xs="9">
             <Form.Check type="checkbox" defaultChecked={isDone} onClick={() => toggleDone({uuid})}/>
-            <span className={textClass} onClick={()=>this.setEditingUuid(uuid)}>{text}</span>
+            <span className={textClass} onClick={startEditing}>{text}</span>
           </Col>
           <Col>
             <ButtonToolbar>
-              <Button variant="primary" type="button" onClick={() => this.setEditingUuid(uuid)}>Edit</Button>
+              <Button variant="primary" type="button" onClick={startEditing}>Edit</Button>
               <Button variant="danger" type="button" onClick={()=>this.deleteTodoItem(uuid)}>Delete</Button>
             </ButtonToolbar>
           </Col>
@@ -47,8 +50,9 @@ class App extends Component {
     deleteTodoItem({uuid});
   }  
 
-  setEditingUuid = (editingUuid) => {
-    this.setState({editingUuid});
+  setEditingUuid = (item) => {
+    const {uuid, text} = item;
+    this.setState({editingUuid:uuid, editingText: text});
   }
 
   cancelUpdateItem = () => {
@@ -73,7 +77,7 @@ class App extends Component {
     return <ListGroup.Item key={uuid}>
       <Container>
         <Row>
-          <Col xs="9"><Form.Control type="text" onKeyPress={onEditItemTextKeypress} onChange={(e)=>this.setState({editingText: e.target.value})} defaultValue={text} placeholder="Add your todo item" /></Col>
+          <Col xs="9"><Form.Control type="text"  onKeyPress={onEditItemTextKeypress} onChange={(e)=>this.setState({editingText: e.target.value})} defaultValue={text} placeholder="Add your todo item" /></Col>
           <Col>
             <ButtonToolbar>
               <Button variant="primary" type="button" onClick={this.updateTodoItem}>Update</Button>
@@ -115,7 +119,13 @@ class App extends Component {
     }    
 
     const totalDone= todos.filter(item=>item.isDone).length;    
+
+    if(totalDone === 0) {
+      return null;
+    }
+
     const donePercentage = Math.floor((totalDone / total) * 100);
+
     return  <ProgressBar now={donePercentage} label={`${donePercentage}%`} />
   }
 
@@ -130,7 +140,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <Container>
-            <Row>
+            <Row className="addItemBar">
               <InputGroup >
                 <Form.Control ref={this.todoItemInput}  onKeyPress={onAddItemTextKeypress} type="text" value={this.state.currentItem} onChange={this.handleItemChange} placeholder="Add your todo item" />
                 <Button variant="primary" onClick={this.handleAddButton} type="submit">
