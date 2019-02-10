@@ -17,11 +17,12 @@ const initialState = {
 export const addTodo = createAction('ADD_TODO');
 export const updateTodo = createAction('UPDATE_TODO');
 export const deleteTodo = createAction('DELETE_TODO');
+export const toggleDone = createAction('TOGGLE_DONE');
 
 function todos(state, action) {
     switch (action.type) {
         case 'ADD_TODO':
-            const todoItem = { uuid: uuidv1(''), text: action.payload }
+            const todoItem = { uuid: uuidv1(''), text: action.payload, isDone: false };
             return {
                 ...state,
                 todos: Object.assign(state.todos, { [todoItem.uuid]: todoItem }),
@@ -29,9 +30,10 @@ function todos(state, action) {
         case 'UPDATE_TODO':
             {
                 const { uuid, text } = action.payload
+                const itemToUpdate = state.todos[uuid];
                 return {
                     ...state,
-                    todos: Object.assign(state.todos, { [uuid]: Object.assign(state.todos[uuid], { text }) }),
+                    todos: Object.assign(state.todos, { [uuid]: Object.assign(itemToUpdate, {text}) }),
                 }
             }
         case 'DELETE_TODO':
@@ -42,6 +44,15 @@ function todos(state, action) {
                     ...state,
                     todos,
                 }
+            }
+        case 'TOGGLE_DONE':
+            {
+                const {uuid} = action.payload;
+                const itemToUpdate = state.todos[uuid];
+                return {
+                    ...state,
+                    todos: Object.assign(state.todos, { [uuid]: Object.assign(itemToUpdate, { isDone: !itemToUpdate.isDone }) }),
+                }                
             }
         default:
             return state;

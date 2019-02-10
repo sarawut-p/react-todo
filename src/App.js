@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Container, InputGroup, ProgressBar, Row, Col, ListGroup, ButtonToolbar } from 'react-bootstrap';
 import './App.css';
 import {connect} from "react-redux";
-import {addTodo, updateTodo, deleteTodo} from './index';
+import {addTodo, updateTodo, deleteTodo, toggleDone} from './index';
 
 class App extends Component {
 
@@ -17,11 +17,15 @@ class App extends Component {
   }
 
   getListItemReadMode = (item) => {
-    const {uuid, text} = item;
+    const {toggleDone} = this.props;
+    const {uuid, text, isDone} = item;
     return <ListGroup.Item key={uuid}>
       <Container>
         <Row>
-          <Col xs="9"><Form.Check type="checkbox" />{text}</Col>
+          <Col xs="9" className='clickable' onClick={()=>toggleDone({uuid})}>
+            <Form.Check type="checkbox" defaultChecked={isDone}/>
+            <span className={isDone && 'done'}>{text}</span>
+          </Col>
           <Col>
             <ButtonToolbar>
               <Button variant="primary" type="button" onClick={() => this.setEditingUuid(uuid)}>Edit</Button>
@@ -73,7 +77,7 @@ class App extends Component {
   getListItem = () => {
     const {todos} = this.props;
     const {editingUuid} = this.state;
-    return Object.values(todos).map(item => item.uuid === editingUuid ? this.getListItemEditMode(item) : this.getListItemReadMode(item));
+    return todos.map(item => item.uuid === editingUuid ? this.getListItemEditMode(item) : this.getListItemReadMode(item));
   }
 
   handleItemChange = (event) => {
@@ -92,8 +96,29 @@ class App extends Component {
   }  
 
   getProgressBar = () => {
-    const now = 60;
-    return <ProgressBar now={now} label={`Progress - ${now}%`} />;
+    const {todos} = this.props;
+    const total = todos.length;
+
+    if(total === 0) {
+      return null;
+    }    
+
+    const totalDone= todos.filter(item=>item.isDone).length;    
+    const donePercentage = (totalDone / total) * 100;
+    return (
+      <Container>
+        <Row>
+        <Col xs="12">
+          Progress - {totalDone || 0} of {todos.length} done
+          </Col>
+        </Row>
+        <Row>
+        <Col xs="12">          
+          <ProgressBar now={donePercentage} label={`${donePercentage}%`} />
+          </Col>          
+        </Row>        
+      </Container>      
+    );
   }
 
   render() {
@@ -111,11 +136,7 @@ class App extends Component {
                  </Button>
               </InputGroup>
             </Row>
-            <Row>
-              <Col xs="12">
-                {this.getProgressBar()}
-              </Col>
-            </Row>
+            {this.getProgressBar()}
             <ListGroup className="list-items">
               {this.getListItem()}
             </ListGroup>
@@ -128,7 +149,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos,    
+    todos: Object.values(state.todos),    
   }
 }
 
@@ -142,6 +163,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteTodoItem: (todoItem) => {
       dispatch(deleteTodo(todoItem));
+    },
+    toggleDone: (params) => {
+      dispatch(toggleDone(params));
     }
   }  
 }

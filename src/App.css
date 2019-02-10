@@ -34,7 +34,7 @@
 .progress {
   height: 3rem !important;
   margin: 50px 0 20px 0;
-  font-size: 1rem;
+  font-size: 2rem !important;
 }
 
 .list-items{
@@ -49,4 +49,12 @@
 
 .list-group-item .btn-toolbar{
   justify-content: flex-end;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.list-group-item .done {
+  text-decoration: line-through;
 }
