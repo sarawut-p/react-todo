@@ -36,15 +36,23 @@ class App extends Component {
     this.setState({editingUuid});
   }
 
+  cancelUpdateItem = () => {
+    this.setState({editingUuid: ''});
+  }
+
+  updateTodoItem = () => {
+    
+  }  
+
   getListItemEditMode = (item) => {
     return <ListGroup.Item>
       <Container>
         <Row>
-          <Col xs="9"><Form.Control type="text" value={item.text} placeholder="Add your todo item" /></Col>
+          <Col xs="9"><Form.Control type="text" defaultValue={item.text} placeholder="Add your todo item" /></Col>
           <Col>
             <ButtonToolbar>
               <Button variant="primary" type="button">Update</Button>
-              <Button variant="outline-secondary" type="button">Cancel</Button>
+              <Button variant="outline-secondary" type="button" onClick={this.cancelUpdateItem}>Cancel</Button>
             </ButtonToolbar>
           </Col>
         </Row>
