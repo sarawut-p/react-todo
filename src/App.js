@@ -14,7 +14,7 @@ class App extends Component {
     this.handleItemChange = this.handleItemChange.bind(this);
     this.handleAddButton = this.handleAddButton.bind(this);
     this.getListItem = this.getListItem.bind(this);
-    this.textInput = React.createRef();
+    this.todoItemInput = React.createRef();
   }
 
   getListItem() {
@@ -42,11 +42,11 @@ class App extends Component {
     const {addTodoItem} = this.props;
     addTodoItem(this.state.currentItem);
     this.setState({currentItem: ''});
-    this.textInput.current.focus(); //
+    this.todoItemInput.current.focus(); //
   }
 
   componentDidMount() {
-    this.textInput.current.focus(); // one important change here is that we need to access the element via current.
+    this.todoItemInput.current.focus(); // one important change here is that we need to access the element via current.
   }  
 
   render() {
@@ -60,7 +60,7 @@ class App extends Component {
           <Container>
             <Row>
               <InputGroup >
-                <Form.Control ref={this.textInput} type="text" value={this.state.currentItem} onChange={this.handleItemChange} placeholder="Add your todo item" />
+                <Form.Control ref={this.todoItemInput} type="text" value={this.state.currentItem} onChange={this.handleItemChange} placeholder="Add your todo item" />
                 <Button variant="primary" onClick={this.handleAddButton} type="submit">
                   Add
                  </Button>
