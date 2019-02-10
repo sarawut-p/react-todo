@@ -27,9 +27,9 @@ class App extends Component {
     return <ListGroup.Item key={uuid}>
       <Container>
         <Row>
-          <Col xs="9" className='clickable'>
+          <Col xs="9">
             <Form.Check type="checkbox" defaultChecked={isDone} onClick={() => toggleDone({uuid})}/>
-            <span classNames={textClass} onClick={()=>this.setEditingUuid(uuid)}>{text}</span>
+            <span className={textClass} onClick={()=>this.setEditingUuid(uuid)}>{text}</span>
           </Col>
           <Col>
             <ButtonToolbar>
@@ -109,21 +109,8 @@ class App extends Component {
     }    
 
     const totalDone= todos.filter(item=>item.isDone).length;    
-    const donePercentage = (totalDone / total) * 100;
-    return (
-      <Container>
-        <Row>
-        <Col xs="12">
-          Progress - {totalDone || 0} of {todos.length} done
-          </Col>
-        </Row>
-        <Row>
-        <Col xs="12">          
-          <ProgressBar now={donePercentage} label={`${donePercentage}%`} />
-          </Col>          
-        </Row>        
-      </Container>      
-    );
+    const donePercentage = Math.floor((totalDone / total) * 100);
+    return  <ProgressBar now={donePercentage} label={`${donePercentage}%`} />
   }
 
   render() {

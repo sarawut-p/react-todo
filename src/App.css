@@ -58,3 +58,7 @@
 .list-group-item .done {
   text-decoration: line-through;
 }
+
+input[type='checkbox'] {
+  cursor:pointer;
+}
