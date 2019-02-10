@@ -8,6 +8,7 @@ import {applyMiddleware, createStore} from 'redux'
 import {Provider} from 'react-redux'
 import {createAction} from 'redux-actions';
 import logger from 'redux-logger'
+import uuidv1 from 'uuid/v1';
 
 const initialState = {
     todos:[]
@@ -17,9 +18,10 @@ export const addTodo = createAction('ADD_TODO')
 
 function todos(state, action) {
     if(action.type === 'ADD_TODO') {
+        const todoItem = {uuid: uuidv1(''), text: action.payload}
         return {
             ...state,
-            todos: [...state.todos, action.payload]
+            todos: [...state.todos, todoItem]
         }
     }
     return state;

@@ -19,10 +19,10 @@ class App extends Component {
 
   getListItem() {
     const {todos} = this.props;
-    return todos && todos.map(item =><ListGroup.Item key={item}>
+    return todos && todos.map(item =><ListGroup.Item key={item.uuid}>
       <Container>
         <Row>
-          <Col xs="9"><Form.Check type="checkbox" />{item}</Col>
+          <Col xs="9"><Form.Check type="checkbox" />{item.text}</Col>
           <Col>
             <ButtonToolbar>
               <Button variant="primary" type="button">Edit</Button>
