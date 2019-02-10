@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Form, Button, Container, InputGroup, ProgressBar, Row, Col, ListGroup, Label, ButtonToolbar } from 'react-bootstrap';
+import { Form, Button, Container, InputGroup, ProgressBar, Row, Col, ListGroup, ButtonToolbar } from 'react-bootstrap';
 import './App.css';
-
+import { connect } from "react-redux";
 
 class App extends Component {
   render() {
 
+    const {todos} = this.props;
     const now = 60;
     const progressInstance = <ProgressBar now={now} label={`Progress - ${now}%`} />;
 
@@ -25,12 +26,12 @@ class App extends Component {
               <Col sm={12}>
                 {progressInstance}
               </Col>
-            </Row>            
+            </Row>
             <ListGroup className="list-items">
               <ListGroup.Item action>
                 <Container>
                   <Row>
-                    <Col xs="9"><Form.Check type="checkbox"/>Cras justo odio</Col>
+                    <Col xs="9"><Form.Check type="checkbox" />Cras justo odio</Col>
                     <Col>
                       <ButtonToolbar>
                         <Button variant="primary" type="button">Edit</Button>
@@ -38,7 +39,7 @@ class App extends Component {
                       </ButtonToolbar>
                     </Col>
                   </Row>
-                </Container>                                              
+                </Container>
               </ListGroup.Item>
               <ListGroup.Item action>
                 <Container>
@@ -51,8 +52,8 @@ class App extends Component {
                       </ButtonToolbar>
                     </Col>
                   </Row>
-                </Container>                                              
-              </ListGroup.Item>              
+                </Container>
+              </ListGroup.Item>
             </ListGroup>
           </Container>
         </header>
@@ -61,4 +62,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    todos: state.todos,
+  }
+}
+
+export default connect(mapStateToProps)(App);
