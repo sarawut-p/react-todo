@@ -12,14 +12,20 @@ class App extends Component {
       currentItem:''
     }
     this.handleItemChange = this.handleItemChange.bind(this);
+    this.handleAddButton = this.handleAddButton.bind(this);
   }
 
   handleItemChange(event){
     this.setState({currentItem: event.target.value});
   }
 
+  handleAddButton(){
+    const {addTodoItem} = this.props;
+    addTodoItem(this.state.currentItem);
+  }  
+
   render() {
-    // const {todos} = this.props;
+    const {todos} = this.props;
     const now = 60;
     const progressInstance = <ProgressBar now={now} label={`Progress - ${now}%`} />;
 
@@ -30,7 +36,7 @@ class App extends Component {
             <Row>
               <InputGroup >
                 <Form.Control type="text" value={this.state.currentItem} onChange={this.handleItemChange} placeholder="Add your todo item" />
-                <Button variant="primary" onClick={()=>{}} type="submit">
+                <Button variant="primary" onClick={this.handleAddButton} type="submit">
                   Add
                  </Button>
               </InputGroup>

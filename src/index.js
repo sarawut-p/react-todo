@@ -15,8 +15,8 @@ const initialState = {
 export const addTodo = createAction('ADD_TODO')
 
 function todos(state = initialState.todos, action) {
-    if(action.type === addTodo.type) {
-        return [...state, action.payload];
+    if(action.type === 'ADD_TODO') {
+        return [action.payload];
     }
     return state;
 }
