@@ -4,23 +4,27 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
-import {createStore} from 'redux'
+import {applyMiddleware, createStore} from 'redux'
 import {Provider} from 'react-redux'
 import {createAction} from 'redux-actions';
+import logger from 'redux-logger'
 
 const initialState = {
-    todos:['Go for a walk']
+    todos:[]
 }
 
 export const addTodo = createAction('ADD_TODO')
 
-function todos(state = initialState.todos, action) {
+function todos(state, action) {
     if(action.type === 'ADD_TODO') {
-        return [action.payload];
+        return {
+            ...state,
+            todos: [...state.todos, action.payload]
+        }
     }
     return state;
 }
-const store = createStore(todos, initialState)
+const store = createStore(todos, initialState, applyMiddleware(logger))
 
 
 ReactDOM.render(

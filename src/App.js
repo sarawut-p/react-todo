@@ -13,11 +13,12 @@ class App extends Component {
     }
     this.handleItemChange = this.handleItemChange.bind(this);
     this.handleAddButton = this.handleAddButton.bind(this);
+    this.getListItem = this.getListItem.bind(this);
   }
 
   getListItem() {
     const {todos} = this.props;
-    return todos.map(item =><ListGroup.Item>
+    return todos && todos.map(item =><ListGroup.Item key={item}>
       <Container>
         <Row>
           <Col xs="9"><Form.Check type="checkbox" />{item}</Col>
