@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Container, InputGroup, ProgressBar, Row, Col, ListGroup, ButtonToolbar } from 'react-bootstrap';
 import './App.css';
 import {connect} from "react-redux";
-import {addTodo} from './index';
+import {addTodo, updateTodo} from './index';
 
 class App extends Component {
 
@@ -10,8 +10,9 @@ class App extends Component {
     super(props);
     this.state = {
       currentItem:'',
-      editingUuid:''
-    }
+      editingUuid:'',
+      editingText: '',
+    };
     this.todoItemInput = React.createRef();
   }
 
@@ -41,17 +42,21 @@ class App extends Component {
   }
 
   updateTodoItem = () => {
-    
+    const {updateTodoItem}  = this.props;
+    const {editingUuid, editingText} = this.state;
+    updateTodoItem({uuid: editingUuid, text:editingText});
+    this.setState({editingUuid: '', editingText: ''});
   }  
 
   getListItemEditMode = (item) => {
-    return <ListGroup.Item>
+    const {uuid, text} = item;
+    return <ListGroup.Item key={uuid}>
       <Container>
         <Row>
-          <Col xs="9"><Form.Control type="text" defaultValue={item.text} placeholder="Add your todo item" /></Col>
+          <Col xs="9"><Form.Control type="text" onChange={(e)=>this.setState({editingText: e.target.value})} defaultValue={text} placeholder="Add your todo item" /></Col>
           <Col>
             <ButtonToolbar>
-              <Button variant="primary" type="button">Update</Button>
+              <Button variant="primary" type="button" onClick={this.updateTodoItem}>Update</Button>
               <Button variant="outline-secondary" type="button" onClick={this.cancelUpdateItem}>Cancel</Button>
             </ButtonToolbar>
           </Col>
@@ -63,7 +68,7 @@ class App extends Component {
   getListItem = () => {
     const {todos} = this.props;
     const {editingUuid} = this.state;
-    return todos && todos.map(item => item.uuid === editingUuid ? this.getListItemEditMode(item) : this.getListItemReadMode(item));
+    return Object.values(todos).map(item => item.uuid === editingUuid ? this.getListItemEditMode(item) : this.getListItemReadMode(item));
   }
 
   handleItemChange = (event) => {
@@ -82,7 +87,6 @@ class App extends Component {
   }  
 
   render() {
-    const {todos} = this.props;
     const now = 60;
     const progressInstance = <ProgressBar now={now} label={`Progress - ${now}%`} />;
 
@@ -123,7 +127,10 @@ const mapDispatchToProps = dispatch => {
   return {
     addTodoItem: (todoItem) => {
       dispatch(addTodo(todoItem));
-    } 
+    },
+    updateTodoItem: (todoItem) => {
+      dispatch(updateTodo(todoItem));
+    }
   }  
 }
 
