@@ -40,6 +40,7 @@ class App extends Component {
   handleAddButton(){
     const {addTodoItem} = this.props;
     addTodoItem(this.state.currentItem);
+    this.setState({currentItem: ''});
   }  
 
   render() {
