@@ -2,11 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -20,50 +15,4 @@
 
 .App-link {
   color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.progress {
-  height: 3rem !important;
-  margin: 50px 0 20px 0;
-  font-size: 2rem !important;
-}
-
-.list-items{
-  color:  black;
-  text-align: left;
-}
-
-.list-group-item .form-check{
- display: inline;
- margin-right: 15px;
- vertical-align: text-bottom;
-}
-
-.list-group-item .btn-toolbar{
-  justify-content: flex-end;
-}
-
-.clickable {
-  cursor: pointer;
-}
-
-.list-group-item .done {
-  text-decoration: line-through;
-}
-
-input[type='checkbox'] {
-  cursor:pointer;
-}
-
-.addItemBar {
-  margin-bottom: 50px;
 }
