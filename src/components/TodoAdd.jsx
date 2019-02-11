@@ -6,7 +6,6 @@ import {
   InputGroup,
   Row,
 } from 'react-bootstrap';
-import './Todo.css';
 import { connect } from 'react-redux';
 import { addTodo } from '../index';
 

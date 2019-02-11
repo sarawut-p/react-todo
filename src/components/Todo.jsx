@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Form, Button, Container, InputGroup, ProgressBar, Row, Col, ListGroup, ButtonToolbar } from 'react-bootstrap';
+import { Form, Button, Container, ProgressBar, Row, Col, ListGroup, ButtonToolbar } from 'react-bootstrap';
 import './Todo.css';
 import { connect } from "react-redux";
-import { addTodo, updateTodo, deleteTodo, toggleDone } from '../index';
+import {updateTodo, deleteTodo, toggleDone } from '../index';
 import classNames from 'classnames';
 import TodoAdd from './TodoAdd';
+import TodoProgress from './TodoProgress';
 
 class Todo extends Component {
 
@@ -114,10 +115,11 @@ class Todo extends Component {
     }
 
     render() {
+        const { todos } = this.props;
         return (
             <Container>
                 <TodoAdd/>
-                {this.getProgressBar()}
+                <TodoProgress todos={todos}/>
                 <ListGroup className="list-items">
                     {this.getListItem()}
                 </ListGroup>
