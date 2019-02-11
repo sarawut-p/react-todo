@@ -4,11 +4,8 @@ import './Todo.css';
 import { connect } from "react-redux";
 import {updateTodo, deleteTodo, toggleDone } from '../index';
 import classNames from 'classnames';
-import TodoAdd from './TodoAdd';
-import TodoProgress from './TodoProgress';
-import TodoItems from './TodoItems';
 
-class Todo extends Component {
+class TodoItem extends Component {
 
     constructor(props) {
         super(props);
@@ -96,40 +93,12 @@ class Todo extends Component {
         return todos.map(item => item.uuid === editingUuid ? this.getListItemEditMode(item) : this.getListItemReadMode(item));
     }
 
-    getProgressBar = () => {
-        const { todos } = this.props;
-        const total = todos.length;
-
-        if (total === 0) {
-            return null;
-        }
-
-        const totalDone = todos.filter(item => item.isDone).length;
-
-        if (totalDone === 0) {
-            return null;
-        }
-
-        const donePercentage = Math.floor((totalDone / total) * 100);
-
-        return <ProgressBar now={donePercentage} label={`${donePercentage}%`} />
-    }
-
     render() {
-        const { todos } = this.props;
         return (
-            <Container>
-                <TodoAdd/>
-                <TodoProgress todos={todos}/>
-                <TodoItems todos={todos}/>
-            </Container>
+            <ListGroup className="list-items">
+                {this.getListItem()}
+            </ListGroup>
         );
-    }
-}
-
-const mapStateToProps = state => {
-    return {
-        todos: Object.values(state.todos),
     }
 }
 
@@ -147,4 +116,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Todo);
+export default connect(null, mapDispatchToProps)(TodoItem);
