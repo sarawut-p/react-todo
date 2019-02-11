@@ -4,17 +4,16 @@ import './Todo.css';
 import { connect } from "react-redux";
 import { addTodo, updateTodo, deleteTodo, toggleDone } from '../index';
 import classNames from 'classnames';
+import TodoAdd from './TodoAdd';
 
 class Todo extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            currentItem: '',
             editingUuid: '',
             editingText: '',
         };
-        this.todoItemInput = React.createRef();
     }
 
     getListItemReadMode = (item) => {
@@ -95,21 +94,6 @@ class Todo extends Component {
         return todos.map(item => item.uuid === editingUuid ? this.getListItemEditMode(item) : this.getListItemReadMode(item));
     }
 
-    handleItemChange = (event) => {
-        this.setState({ currentItem: event.target.value });
-    }
-
-    handleAddButton = () => {
-        const { addTodoItem } = this.props;
-        addTodoItem(this.state.currentItem);
-        this.setState({ currentItem: '' });
-        this.todoItemInput.current.focus(); //
-    }
-
-    componentDidMount() {
-        this.todoItemInput.current.focus(); // one important change here is that we need to access the element via current.
-    }
-
     getProgressBar = () => {
         const { todos } = this.props;
         const total = todos.length;
@@ -130,22 +114,9 @@ class Todo extends Component {
     }
 
     render() {
-
-        const onAddItemTextKeypress = (e) => {
-            if (e.key === 'Enter') {
-                this.handleAddButton();
-            }
-        }
         return (
             <Container>
-                <Row className="addItemBar">
-                    <InputGroup >
-                        <Form.Control ref={this.todoItemInput} onKeyPress={onAddItemTextKeypress} type="text" value={this.state.currentItem} onChange={this.handleItemChange} placeholder="Add your todo item" />
-                        <Button variant="primary" onClick={this.handleAddButton} type="submit">
-                            Add
-                 </Button>
-                    </InputGroup>
-                </Row>
+                <TodoAdd/>
                 {this.getProgressBar()}
                 <ListGroup className="list-items">
                     {this.getListItem()}
@@ -163,9 +134,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addTodoItem: (todoItem) => {
-            dispatch(addTodo(todoItem));
-        },
         updateTodoItem: (todoItem) => {
             dispatch(updateTodo(todoItem));
         },
