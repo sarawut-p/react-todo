@@ -35,7 +35,7 @@ class TodoItem extends Component {
                     <Col>
                         <ButtonToolbar>
                             <Button variant="primary" type="button" onClick={startEditing}>Edit</Button>
-                            <Button variant="danger" type="button" onClick={() => this.deleteTodoItem(uuid)}>Delete</Button>
+                            <Button variant="danger" type="button" onClick={() => this.deleteTodoItem(item)}>Delete</Button>
                         </ButtonToolbar>
                     </Col>
                 </Row>
@@ -43,9 +43,12 @@ class TodoItem extends Component {
         </ListGroup.Item>
     }
 
-    deleteTodoItem = (uuid) => {
+    deleteTodoItem = (item) => {
+        const {uuid, text} = item;    
         const { deleteTodoItem } = this.props;
-        deleteTodoItem({ uuid });
+        if(window.confirm(`Do you want to delete ${text} ?`)) {
+            deleteTodoItem({ uuid });
+        }        
     }
 
     setEditingUuid = (item) => {
