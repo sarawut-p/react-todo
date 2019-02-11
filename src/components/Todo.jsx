@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Form, Button, Container, ProgressBar, Row, Col, ListGroup, ButtonToolbar } from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 import './Todo.css';
 import { connect } from "react-redux";
-import {updateTodo, deleteTodo, toggleDone } from '../index';
-import classNames from 'classnames';
 import TodoAdd from './TodoAdd';
 import TodoProgress from './TodoProgress';
 import TodoItems from './TodoItems';
@@ -15,7 +13,8 @@ class Todo extends Component {
             <Container>
                 <TodoAdd/>
                 <TodoProgress todos={todos}/>
-                <TodoItems todos={todos}/>
+                <TodoItems label='To do' todos={todos.filter(item=>!item.isDone)}/>
+                <TodoItems label='Done' todos={todos.filter(item=>item.isDone)}/>
             </Container>
         );
     }

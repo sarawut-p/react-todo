@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Button, Container, ProgressBar, Row, Col, ListGroup, ButtonToolbar } from 'react-bootstrap';
-import './Todo.css';
+import { Form, Button, Container, ProgressBar, Row, Col, ListGroup, ButtonToolbar, Navbar } from 'react-bootstrap';
+import './TodoItems.css';
 import { connect } from "react-redux";
 import {updateTodo, deleteTodo, toggleDone } from '../index';
 import classNames from 'classnames';
@@ -94,10 +94,19 @@ class TodoItem extends Component {
     }
 
     render() {
+        const {label, todos} = this.props;
+        
+        if (todos.length === 0) {
+            return null;
+        }
+
         return (
-            <ListGroup className="list-items">
-                {this.getListItem()}
-            </ListGroup>
+            <Container className='todo-items'>
+                <h2>{label}</h2>
+                <ListGroup className="list-items">
+                    {this.getListItem()}
+                </ListGroup>
+            </Container>
         );
     }
 }
