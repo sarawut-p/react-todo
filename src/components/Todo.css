@@ -1,0 +1,36 @@
+.progress {
+  height: 3rem !important;
+  margin: 50px 0 20px 0;
+  font-size: 2rem !important;
+}
+
+.list-items {
+  color: black;
+  text-align: left;
+}
+
+.list-group-item .form-check {
+  display: inline;
+  margin-right: 15px;
+  vertical-align: text-bottom;
+}
+
+.list-group-item .btn-toolbar {
+  justify-content: flex-end;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.list-group-item .done {
+  text-decoration: line-through;
+}
+
+input[type='checkbox'] {
+  cursor: pointer;
+}
+
+.addItemBar {
+  margin-bottom: 50px;
+}
