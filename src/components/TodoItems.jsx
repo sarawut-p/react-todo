@@ -23,16 +23,18 @@ class TodoItem extends Component {
 
     getListItemEditMode = (item) => {
         const { uuid, text } = item;
-        const onEditItemTextKeypress = (e) => {
+        const onEditItemTextKeyDowm = (e) => {
             if (e.key === 'Enter') {
                 this.updateTodoItem();
+            } else if (e.key === 'Escape') {
+                this.cancelUpdateItem();
             }
         }
        
         return <ListGroup.Item key={uuid}>
             <Container>
                 <Row>
-                    <Col xs="9"><Form.Control autoFocus={true} type="text" onKeyPress={onEditItemTextKeypress} onChange={(e) => this.setState({ editingText: e.target.value })} defaultValue={text} placeholder="Add your todo item" /></Col>
+                    <Col xs="9"><Form.Control autoFocus={true} type="text" onKeyDown={onEditItemTextKeyDowm} onChange={(e) => this.setState({ editingText: e.target.value })} defaultValue={text} placeholder="Add your todo item" /></Col>
                     <Col>
                         <ButtonToolbar>
                             <Button variant="primary" type="button" disabled={!this.canUpdate()} onClick={this.updateTodoItem}>Update</Button>
