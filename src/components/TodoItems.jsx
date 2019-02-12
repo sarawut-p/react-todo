@@ -56,11 +56,18 @@ class TodoItem extends Component {
         this.setState({ editingUuid: uuid, editingText: text });
     }
 
+    canUpdate = () => this.state.editingText.trim();
+
     cancelUpdateItem = () => {
         this.setState({ editingUuid: '' });
     }
 
     updateTodoItem = () => {
+
+        if(!this.canUpdate()) {
+            return;
+        }
+
         const { updateTodoItem } = this.props;
         const { editingUuid, editingText } = this.state;
         updateTodoItem({ uuid: editingUuid, text: editingText });
@@ -74,14 +81,14 @@ class TodoItem extends Component {
                 this.updateTodoItem();
             }
         }
-
+       
         return <ListGroup.Item key={uuid}>
             <Container>
                 <Row>
                     <Col xs="9"><Form.Control type="text" onKeyPress={onEditItemTextKeypress} onChange={(e) => this.setState({ editingText: e.target.value })} defaultValue={text} placeholder="Add your todo item" /></Col>
                     <Col>
                         <ButtonToolbar>
-                            <Button variant="primary" type="button" onClick={this.updateTodoItem}>Update</Button>
+                            <Button variant="primary" type="button" disabled={!this.canUpdate()} onClick={this.updateTodoItem}>Update</Button>
                             <Button variant="outline-secondary" type="button" onClick={this.cancelUpdateItem}>Cancel</Button>
                         </ButtonToolbar>
                     </Col>
