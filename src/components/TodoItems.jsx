@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Container, ProgressBar, Row, Col, ListGroup, ButtonToolbar, Navbar } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, ListGroup, ButtonToolbar } from 'react-bootstrap';
 import './TodoItems.css';
 import { connect } from "react-redux";
 import {updateTodo, deleteTodo, toggleDone } from '../index';
