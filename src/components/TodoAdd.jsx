@@ -14,14 +14,19 @@ class TodoAdd extends Component {
     super(props);
     this.todoItemInput = React.createRef();
     this.state = {
-        currentItem: '',
+        todoText: '',
     };
   }
 
   handleAddButton = () => {
+
+    if(!this.canAdd()) {
+      return false;
+    }
+
     const { addTodoItem } = this.props;
-    addTodoItem(this.state.currentItem);
-    this.setState({ currentItem: '' });
+    addTodoItem(this.state.todoText);
+    this.setState({ todoText: '' });
     this.todoItemInput.current.focus();
   };
 
@@ -29,7 +34,11 @@ class TodoAdd extends Component {
     this.todoItemInput.current.focus();
   }
 
-  render() {
+  canAdd = () => {
+    return this.state.todoText.trim();
+  }
+
+  render() {    
     const onAddItemTextKeypress = e => {
       if (e.key === 'Enter') {
         this.handleAddButton();
@@ -43,14 +52,15 @@ class TodoAdd extends Component {
               ref={this.todoItemInput}
               onKeyPress={onAddItemTextKeypress}
               type="text"
-              value={this.state.currentItem}
-              onChange={(event)=>this.setState({ currentItem: event.target.value })}
+              value={this.state.todoText}
+              onChange={(event)=>this.setState({ todoText: event.target.value })}
               placeholder="Add your todo item"
             />
             <Button
               variant="primary"
               onClick={this.handleAddButton}
               type="submit"
+              disabled={!this.canAdd()}
             >
               Add
             </Button>
