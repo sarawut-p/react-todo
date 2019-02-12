@@ -9,12 +9,15 @@ import TodoItems from './TodoItems';
 class Todo extends Component {
     render() {
         const { todos } = this.props;
+        const todoItems = todos.filter(item=>!item.isDone);
+        const doneItems = todos.filter(item=>item.isDone);
+
         return (
             <Container>
                 <TodoAdd/>
                 <TodoProgress todos={todos}/>
-                <TodoItems label='To do' todos={todos.filter(item=>!item.isDone)}/>
-                <TodoItems label='Done' todos={todos.filter(item=>item.isDone)}/>
+                <TodoItems label={`Todo (${todoItems.length})`} todos={todoItems}/>
+                <TodoItems label={`Done (${doneItems.length})`} todos={doneItems}/>
             </Container>
         );
     }
