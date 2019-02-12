@@ -15,6 +15,35 @@ class TodoItem extends Component {
         };
     }
 
+    getListItem = (item) => {
+        const {editingUuid} = this.state;
+        const isEditMode = item.uuid === editingUuid;
+        return isEditMode ? this.getListItemEditMode(item) : this.getListItemReadMode(item);
+    }
+
+    getListItemEditMode = (item) => {
+        const { uuid, text } = item;
+        const onEditItemTextKeypress = (e) => {
+            if (e.key === 'Enter') {
+                this.updateTodoItem();
+            }
+        }
+       
+        return <ListGroup.Item key={uuid}>
+            <Container>
+                <Row>
+                    <Col xs="9"><Form.Control autoFocus={true} type="text" onKeyPress={onEditItemTextKeypress} onChange={(e) => this.setState({ editingText: e.target.value })} defaultValue={text} placeholder="Add your todo item" /></Col>
+                    <Col>
+                        <ButtonToolbar>
+                            <Button variant="primary" type="button" disabled={!this.canUpdate()} onClick={this.updateTodoItem}>Update</Button>
+                            <Button variant="outline-secondary" type="button" onClick={this.cancelUpdateItem}>Cancel</Button>
+                        </ButtonToolbar>
+                    </Col>
+                </Row>
+            </Container>
+        </ListGroup.Item>
+    }    
+
     getListItemReadMode = (item) => {
         const { toggleDone } = this.props;
         const { uuid, text, isDone } = item;
@@ -63,44 +92,13 @@ class TodoItem extends Component {
     }
 
     updateTodoItem = () => {
-
         if(!this.canUpdate()) {
             return;
         }
-
         const { updateTodoItem } = this.props;
         const { editingUuid, editingText } = this.state;
         updateTodoItem({ uuid: editingUuid, text: editingText });
         this.setState({ editingUuid: '', editingText: '' });
-    }
-
-    getListItemEditMode = (item) => {
-        const { uuid, text } = item;
-        const onEditItemTextKeypress = (e) => {
-            if (e.key === 'Enter') {
-                this.updateTodoItem();
-            }
-        }
-       
-        return <ListGroup.Item key={uuid}>
-            <Container>
-                <Row>
-                    <Col xs="9"><Form.Control autoFocus={true} type="text" onKeyPress={onEditItemTextKeypress} onChange={(e) => this.setState({ editingText: e.target.value })} defaultValue={text} placeholder="Add your todo item" /></Col>
-                    <Col>
-                        <ButtonToolbar>
-                            <Button variant="primary" type="button" disabled={!this.canUpdate()} onClick={this.updateTodoItem}>Update</Button>
-                            <Button variant="outline-secondary" type="button" onClick={this.cancelUpdateItem}>Cancel</Button>
-                        </ButtonToolbar>
-                    </Col>
-                </Row>
-            </Container>
-        </ListGroup.Item>
-    }
-
-    getListItem = () => {
-        const { todos } = this.props;
-        const { editingUuid } = this.state;
-        return todos.map(item => item.uuid === editingUuid ? this.getListItemEditMode(item) : this.getListItemReadMode(item));
     }
 
     render() {
@@ -114,7 +112,7 @@ class TodoItem extends Component {
             <Container className='todo-items'>
                 <h2>{label}</h2>
                 <ListGroup className="list-items">
-                    {this.getListItem()}
+                    {todos.map(this.getListItem)}
                 </ListGroup>
             </Container>
         );

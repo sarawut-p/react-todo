@@ -9,9 +9,10 @@ export const initialState = {
 export const todoReducer = handleActions(
   {
     [addTodo]: (state, action) => {
+      const {text} = action.payload;
       const todoItem = {
         uuid: uuidv1(),
-        text: action.payload,
+        text,
         isDone: false
       };
       return {

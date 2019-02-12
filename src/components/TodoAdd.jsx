@@ -25,7 +25,7 @@ class TodoAdd extends Component {
     }
 
     const { addTodoItem } = this.props;
-    addTodoItem(this.state.todoText);
+    addTodoItem({text: this.state.todoText});
     this.setState({ todoText: '' });
     this.todoItemInput.current.focus();
   };
