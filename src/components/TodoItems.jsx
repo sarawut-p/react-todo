@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Form, Button, Container, Row, Col, ListGroup, ButtonToolbar } from 'react-bootstrap';
 import './TodoItems.css';
 import { connect } from "react-redux";
-import {updateTodo, deleteTodo, toggleDone } from '../index';
 import classNames from 'classnames';
+import { updateTodo, deleteTodo, toggleDone } from '../todoActions';
 
 class TodoItem extends Component {
 

@@ -6,8 +6,8 @@ import {
   InputGroup,
   Row,
 } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { addTodo } from '../index';
+import {connect} from 'react-redux';
+import { addTodo } from '../todoActions';
 
 class TodoAdd extends Component {
   constructor(props) {
